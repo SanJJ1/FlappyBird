@@ -7,18 +7,24 @@ import java.awt.geom.*;
 
 
 
-public class second extends JPanel implements ActionListener
+public class second extends JPanel implements ActionListener, KeyListener
 {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-    Timer t = new Timer(10, this);
-    double x = 0, y = 0, yVel = 0, xVel = 0, grav = .0001;
-
-
+    Timer t = new Timer(5, this);
+    double x = 100, y = 100, yVel = 0, xVel = 0, grav = .03;
     private ImageIcon bird;
     
+    public second()
+    {
+        t.start();
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(true);
+    }
+
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
@@ -40,5 +46,33 @@ public class second extends JPanel implements ActionListener
         y += yVel;
         yVel += grav;
         repaint();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e)
+    {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_SPACE)
+        {
+            yVel = -2;
+            System.out.println("Typed");
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e)
+    {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_SPACE)
+        {
+            yVel = -3;
+            System.out.println("pressed");
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e)
+    {
+
     }
 }
