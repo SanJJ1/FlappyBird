@@ -14,7 +14,7 @@ public class second extends JPanel implements ActionListener, KeyListener
      */
     private static final long serialVersionUID = 1L;
     Timer t = new Timer(5, this);
-    double x = 100, y = 100, yVel = 0, xVel = 0, grav = .03;
+    double x = 100, y = 100, yVel = 0, xVel = 0, grav = .03, birdWidth = 34, birdHeight = 25;
     private ImageIcon bird;
     
     public second()
@@ -33,11 +33,31 @@ public class second extends JPanel implements ActionListener, KeyListener
 
         bird = new ImageIcon("imgs/yellowbird-midflap.png");
         bird.paintIcon(this, g, (int)x, (int)y); 
-        Ellipse2D birdHitBox = new Ellipse2D.Double((int)x, (int)y, 34, 25);
+        Ellipse2D birdHitBox = new Ellipse2D.Double((int)x, (int)y, birdWidth, birdHeight);
 
         g2.draw(birdHitBox);
+
+        //edge detection
+        if (y > Macheads.screenHeight - birdHeight - 30)
+        {
+            bounce();
+        }
+        else if (y < 0)
+        {
+            y = 0;
+            yVel = 0;
+        }
+
+
+
         t.start();
     }
+
+    public void bounce()
+    {
+        yVel = -3;
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e)
@@ -51,12 +71,7 @@ public class second extends JPanel implements ActionListener, KeyListener
     @Override
     public void keyTyped(KeyEvent e)
     {
-        int code = e.getKeyCode();
-        if (code == KeyEvent.VK_SPACE)
-        {
-            yVel = -2;
-            System.out.println("Typed");
-        }
+
     }
 
     @Override
@@ -65,8 +80,7 @@ public class second extends JPanel implements ActionListener, KeyListener
         int code = e.getKeyCode();
         if (code == KeyEvent.VK_SPACE)
         {
-            yVel = -3;
-            System.out.println("pressed");
+            bounce();
         }
     }
 
