@@ -31,7 +31,7 @@ public class second extends JPanel implements ActionListener, KeyListener
 
         Graphics2D g2 = (Graphics2D) g;
 
-        bird = new ImageIcon("imgs/yellowbird-midflap.png");
+        bird = new ImageIcon("assets/sprites/yellowbird-midflap.png");
         bird.paintIcon(this, g, (int)x, (int)y); 
         Ellipse2D birdHitBox = new Ellipse2D.Double((int)x, (int)y, birdWidth, birdHeight);
 
