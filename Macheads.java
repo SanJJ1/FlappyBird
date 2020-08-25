@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 public class Macheads 
 {
-    public static int screenWidth = 600, screenHeight = 400;
+    public static int screenWidth = 400, screenHeight = 548;
     public static void main(String args[])
     {
         second s = new second();
@@ -18,3 +18,5 @@ public class Macheads
     }
     
 }
+
+
