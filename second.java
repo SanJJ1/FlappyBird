@@ -15,9 +15,13 @@ public class second extends JPanel implements ActionListener, KeyListener
      */
     private static final long serialVersionUID = 1L;
     Timer t = new Timer(5, this);
-    double x = 100, y = 100, yVel = 0, xVel = 0, grav = .03, birdWidth = 34, birdHeight = 25;
+    double x = 100, y = 100, yVel = 0, xVel = 0, grav = .03, 
+            birdWidth = 34, birdHeight = 25,
+            bgX = 0, bgVel = 1;
     String s = "assets/sprites/";
     int i = ThreadLocalRandom.current().nextInt(0, 3), j = 0;
+
+    ImageIcon background = new ImageIcon(s + "background-day.png");
     ImageIcon[][] birdFrames = 
     { 
         {
@@ -49,16 +53,20 @@ public class second extends JPanel implements ActionListener, KeyListener
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D) g;
+
+        background.paintIcon(this, g, (int)bgX, 0);
+        background.paintIcon(this, g, (int)bgX + 288, 0);
+        background.paintIcon(this, g, (int)bgX + 576, 0);
 
         j++;
         j %= 3;
         bird = birdFrames[i][j];
         bird.paintIcon(this, g, (int)x, (int)y); 
         Ellipse2D birdHitBox = new Ellipse2D.Double((int)x, (int)y, birdWidth, birdHeight);
-
         g2.draw(birdHitBox);
+
+
         detectEdges();
 
 
@@ -115,3 +123,4 @@ public class second extends JPanel implements ActionListener, KeyListener
 
     }
 }
+
