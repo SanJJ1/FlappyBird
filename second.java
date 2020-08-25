@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 
@@ -15,6 +16,26 @@ public class second extends JPanel implements ActionListener, KeyListener
     private static final long serialVersionUID = 1L;
     Timer t = new Timer(5, this);
     double x = 100, y = 100, yVel = 0, xVel = 0, grav = .03, birdWidth = 34, birdHeight = 25;
+    String s = "assets/sprites/";
+    int i = ThreadLocalRandom.current().nextInt(0, 3), j = 0;
+    ImageIcon[][] birdFrames = 
+    { 
+        {
+            new ImageIcon(s + "yellowbird-downflap.png"),
+            new ImageIcon(s + "yellowbird-midflap.png"),
+            new ImageIcon(s + "yellowbird-upflap.png")
+        },
+        {
+            new ImageIcon(s + "redbird-downflap.png"),
+            new ImageIcon(s + "redbird-midflap.png"),
+            new ImageIcon(s + "redbird-upflap.png")
+        },
+        {
+            new ImageIcon(s + "bluebird-downflap.png"),
+            new ImageIcon(s + "bluebird-midflap.png"),
+            new ImageIcon(s + "bluebird-upflap.png")
+        }  
+    };
     private ImageIcon bird;
     
     public second()
@@ -31,13 +52,21 @@ public class second extends JPanel implements ActionListener, KeyListener
 
         Graphics2D g2 = (Graphics2D) g;
 
-        bird = new ImageIcon("assets/sprites/yellowbird-midflap.png");
+        j++;
+        j %= 3;
+        bird = birdFrames[i][j];
         bird.paintIcon(this, g, (int)x, (int)y); 
         Ellipse2D birdHitBox = new Ellipse2D.Double((int)x, (int)y, birdWidth, birdHeight);
 
         g2.draw(birdHitBox);
+        detectEdges();
 
-        //edge detection
+
+        t.start();
+    }
+
+    public void detectEdges()
+    {
         if (y > Macheads.screenHeight - birdHeight - 30)
         {
             bounce();
@@ -47,10 +76,6 @@ public class second extends JPanel implements ActionListener, KeyListener
             y = 0;
             yVel = 0;
         }
-
-
-
-        t.start();
     }
 
     public void bounce()
