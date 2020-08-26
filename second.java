@@ -64,32 +64,31 @@ public class second extends JPanel implements ActionListener, KeyListener
         Graphics2D g2 = (Graphics2D) g;
 
         background.paintIcon(this, g, (int)bgX, 0);
-        background.paintIcon(this, g, (int)bgX + 288, 0);
-        background.paintIcon(this, g, (int)bgX + 576, 0);
+        background.paintIcon(this, g, (int)bgX + 280, 0);
+        background.paintIcon(this, g, (int)bgX + 560, 0);
         bgX -= bgVel;
-        bgX %= 288;
+        bgX %= 280;
         base.paintIcon(this, g, (int)bX, 420);
         base.paintIcon(this, g, (int)bX + 336, 420);
         base.paintIcon(this, g, (int)bX + 336 + 336, 420);
         bX -= bVel;
         bX %= 336;
-
+        Rectangle2D baseHitBox = new Rectangle2D.Double(0, 420, Macheads.screenWidth, 112);
 
         j++;
         j %= 3;
         bird = birdFrames[i][j];
         bird.paintIcon(this, g, (int)x, (int)y); 
         Ellipse2D birdHitBox = new Ellipse2D.Double((int)x, (int)y, birdWidth, birdHeight);
-        g2.draw(birdHitBox);
 
 
-        detectEdges();
+        detectEdges(birdHitBox, baseHitBox);
 
 
         t.start();
     }
 
-    public void detectEdges()
+    public void detectEdges(Ellipse2D birdhit, Rectangle2D basehit)
     {
         if (y > Macheads.screenHeight - birdHeight - 30)
         {
@@ -100,6 +99,12 @@ public class second extends JPanel implements ActionListener, KeyListener
             y = 0;
             yVel = 0;
         }
+
+        if(birdhit.intersects(basehit))
+        {
+            bounce();
+        }
+
     }
 
     public void bounce()
