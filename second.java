@@ -1,6 +1,6 @@
 import javax.swing.*;
 import javax.swing.Timer;
-import javax.swing.JFrame;
+// import javax.swing.JFrame;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -14,14 +14,18 @@ public class second extends JPanel implements ActionListener, KeyListener
      *
      */
     private static final long serialVersionUID = 1L;
-    Timer t = new Timer(5, this);
-    double x = 100, y = 100, yVel = 0, xVel = 0, grav = .03, 
+    Timer t = new Timer(10, this);
+    double x = 100, y = 100, yVel = 0, xVel = 0, grav = .1, 
             birdWidth = 34, birdHeight = 25,
-            bgX = 0, bgVel = 1;
+            bgX = 0, bgVel = .5, bX = 0, bVel = 1;
     String s = "assets/sprites/";
     int i = ThreadLocalRandom.current().nextInt(0, 3), j = 0;
 
-    ImageIcon background = new ImageIcon(s + "background-day.png");
+    ImageIcon[] backgrounds = 
+    {
+        new ImageIcon(s + "background-night.png"),
+        new ImageIcon(s + "background-night.png")
+    };
     ImageIcon[][] birdFrames = 
     { 
         {
@@ -40,6 +44,10 @@ public class second extends JPanel implements ActionListener, KeyListener
             new ImageIcon(s + "bluebird-upflap.png")
         }  
     };
+
+    ImageIcon background = backgrounds[ThreadLocalRandom.current().nextInt(0, 2)];
+    ImageIcon base = new ImageIcon(s + "base.png");
+
     private ImageIcon bird;
     
     public second()
@@ -58,6 +66,14 @@ public class second extends JPanel implements ActionListener, KeyListener
         background.paintIcon(this, g, (int)bgX, 0);
         background.paintIcon(this, g, (int)bgX + 288, 0);
         background.paintIcon(this, g, (int)bgX + 576, 0);
+        bgX -= bgVel;
+        bgX %= 288;
+        base.paintIcon(this, g, (int)bX, 420);
+        base.paintIcon(this, g, (int)bX + 336, 420);
+        base.paintIcon(this, g, (int)bX + 336 + 336, 420);
+        bX -= bVel;
+        bX %= 336;
+
 
         j++;
         j %= 3;
@@ -88,7 +104,7 @@ public class second extends JPanel implements ActionListener, KeyListener
 
     public void bounce()
     {
-        yVel = -3;
+        yVel = -5;
     }
 
 
