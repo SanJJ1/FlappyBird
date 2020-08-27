@@ -2,12 +2,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 
-public class Macheads 
+public class Main 
 {
     public static int screenWidth = 400, screenHeight = 548;
     public static void main(String args[])
     {
-        second s = new second();
+        RunGraphics s = new RunGraphics();
         JFrame f = new JFrame("Flappy Bird");
         ImageIcon icon = new ImageIcon("assets/sprites/yellowbird-midflap.png");
         f.setIconImage(icon.getImage());

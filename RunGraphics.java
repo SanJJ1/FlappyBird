@@ -8,22 +8,22 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 
-public class second extends JPanel implements ActionListener, KeyListener
+public class RunGraphics extends JPanel implements ActionListener, KeyListener
 {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-    Timer t = new Timer(10, this);
-    double x = 100, y = 100, yVel = 0, xVel = 0, grav = .1, 
+    Timer t = new Timer(5, this);
+    double x = 70, y = 100, yVel = 0, xVel = 0, grav = .1, 
             birdWidth = 34, birdHeight = 25,
-            bgX = 0, bgVel = .5, bX = 0, bVel = 1;
+            bgX = 0, bgVel = .3, bX = 0, bVel = .7;
     String s = "assets/sprites/";
     int i = ThreadLocalRandom.current().nextInt(0, 3), j = 0;
 
     ImageIcon[] backgrounds = 
     {
-        new ImageIcon(s + "background-night.png"),
+        new ImageIcon(s + "background-day.png"),
         new ImageIcon(s + "background-night.png")
     };
     ImageIcon[][] birdFrames = 
@@ -50,7 +50,7 @@ public class second extends JPanel implements ActionListener, KeyListener
 
     private ImageIcon bird;
     
-    public second()
+    public RunGraphics()
     {
         t.start();
         addKeyListener(this);
@@ -73,7 +73,7 @@ public class second extends JPanel implements ActionListener, KeyListener
         base.paintIcon(this, g, (int)bX + 336 + 336, 420);
         bX -= bVel;
         bX %= 336;
-        Rectangle2D baseHitBox = new Rectangle2D.Double(0, 420, Macheads.screenWidth, 112);
+        Rectangle2D baseHitBox = new Rectangle2D.Double(0, 420, Main.screenWidth, 112);
 
         j++;
         j %= 3;
@@ -90,17 +90,12 @@ public class second extends JPanel implements ActionListener, KeyListener
 
     public void detectEdges(Ellipse2D birdhit, Rectangle2D basehit)
     {
-        if (y > Macheads.screenHeight - birdHeight - 30)
-        {
-            bounce();
-        }
-        else if (y < 0)
-        {
-            y = 0;
-            yVel = 0;
-        }
 
-        if(birdhit.intersects(basehit))
+        if (y < 3)
+        {
+            y = 3;
+        }
+        else if(birdhit.intersects(basehit))
         {
             bounce();
         }
