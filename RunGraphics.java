@@ -7,17 +7,15 @@ import java.awt.geom.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-
 public class RunGraphics extends JPanel implements ActionListener, KeyListener
 {
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     Timer t = new Timer(5, this);
     double x = 70, y = 100, yVel = 0, xVel = 0, grav = .1, 
             birdWidth = 34, birdHeight = 25,
-            bgX = 0, bgVel = .3, bX = 0, bVel = .7;
+            bgX = 0, bgVel = .3;
+
+    public static double bX = 0, bVel = .7;
     String s = "assets/sprites/";
     int i = ThreadLocalRandom.current().nextInt(0, 3), j = 0;
 
@@ -63,6 +61,7 @@ public class RunGraphics extends JPanel implements ActionListener, KeyListener
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
+
         background.paintIcon(this, g, (int)bgX, 0);
         background.paintIcon(this, g, (int)bgX + 280, 0);
         background.paintIcon(this, g, (int)bgX + 560, 0);
@@ -74,6 +73,8 @@ public class RunGraphics extends JPanel implements ActionListener, KeyListener
         bX -= bVel;
         bX %= 336;
         Rectangle2D baseHitBox = new Rectangle2D.Double(0, 420, Main.screenWidth, 112);
+
+        Pipe.draw(this, g);
 
         j++;
         j %= 3;
