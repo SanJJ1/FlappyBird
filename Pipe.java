@@ -9,8 +9,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Pipe
 {
     public static String s = "assets/sprites/";
-    public static ImageIcon pipe = new ImageIcon(s + "pipe-green.png");
+    public static ImageIcon pipeDown = new ImageIcon(s + "pipe-green-down.png");
+    public static ImageIcon pipeUp = new ImageIcon(s + "pipe-green.png");
     public static double pipeX = 0, pipeVel = RunGraphics.bVel;
+    public static int pipeY = 0, gap = 60, pipeWidth = 52, pipeHeight = 300,
+     xGap = Main.screenWidth + pipeWidth;
 
     public Pipe()
     {
@@ -19,7 +22,11 @@ public class Pipe
 
     public static void draw(Component c, Graphics g)
     {
-        pipe.paintIcon(c, g, 0, 0);
+        pipeDown.paintIcon(c, g, (int)pipeX + xGap - pipeWidth, pipeY - gap);
+        pipeUp.paintIcon(c, g, (int)pipeX + xGap - pipeWidth, pipeHeight + pipeY + gap);
+        pipeX -= pipeVel;
+        pipeX %= xGap;
+
     }
 }
 

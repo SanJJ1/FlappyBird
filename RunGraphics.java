@@ -10,12 +10,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RunGraphics extends JPanel implements ActionListener, KeyListener
 {
     private static final long serialVersionUID = 1L;
-    Timer t = new Timer(5, this);
-    double x = 70, y = 100, yVel = 0, xVel = 0, grav = .1, 
+    Timer t = new Timer(7, this);
+    double x = 70, y = 100, yVel = 0, xVel = 0, grav = .13, 
             birdWidth = 34, birdHeight = 25,
             bgX = 0, bgVel = .3;
 
-    public static double bX = 0, bVel = .7;
+    public static double bX = 0, bVel = 1.3;
     String s = "assets/sprites/";
     int i = ThreadLocalRandom.current().nextInt(0, 3), j = 0;
 
@@ -67,6 +67,10 @@ public class RunGraphics extends JPanel implements ActionListener, KeyListener
         background.paintIcon(this, g, (int)bgX + 560, 0);
         bgX -= bgVel;
         bgX %= 280;
+
+        Pipe.draw(this, g);
+
+
         base.paintIcon(this, g, (int)bX, 420);
         base.paintIcon(this, g, (int)bX + 336, 420);
         base.paintIcon(this, g, (int)bX + 336 + 336, 420);
@@ -74,7 +78,6 @@ public class RunGraphics extends JPanel implements ActionListener, KeyListener
         bX %= 336;
         Rectangle2D baseHitBox = new Rectangle2D.Double(0, 420, Main.screenWidth, 112);
 
-        Pipe.draw(this, g);
 
         j++;
         j %= 3;
@@ -108,6 +111,14 @@ public class RunGraphics extends JPanel implements ActionListener, KeyListener
         yVel = -5;
     }
 
+    private static double sigmoid(double x)
+    {
+        int n = 20;
+        double nd2 = 10;
+        double nd = .05;
+        return n / (1 + Math.exp(-4 * x * nd)) - nd2;
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e)
@@ -115,6 +126,7 @@ public class RunGraphics extends JPanel implements ActionListener, KeyListener
         x += xVel;
         y += yVel;
         yVel += grav;
+        yVel = sigmoid(yVel);
         repaint();
     }
 
