@@ -12,7 +12,9 @@ public class Pipe
     public static ImageIcon pipeDown = new ImageIcon(s + "pipe-green-down.png");
     public static ImageIcon pipeUp = new ImageIcon(s + "pipe-green.png");
     public static double pipeX = 0, pipeVel = RunGraphics.bVel;
-    public static int pipeY = 0, gap = 60, pipeWidth = 52, pipeHeight = 300,
+    public static int pipeY = ThreadLocalRandom.current().nextInt(-210, 31),
+     gap = 60, pipeWidth = 52, pipeHeight = 300,
+    // Max pipeY = 30, min = -210
      xGap = Main.screenWidth + pipeWidth;
 
     public Pipe()
@@ -25,6 +27,11 @@ public class Pipe
         pipeDown.paintIcon(c, g, (int)pipeX + xGap - pipeWidth, pipeY - gap);
         pipeUp.paintIcon(c, g, (int)pipeX + xGap - pipeWidth, pipeHeight + pipeY + gap);
         pipeX -= pipeVel;
+        if (pipeX != pipeX % xGap)
+        {
+            pipeY = ThreadLocalRandom.current().nextInt(-210, 31);
+        }
+
         pipeX %= xGap;
 
     }

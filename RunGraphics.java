@@ -18,6 +18,7 @@ public class RunGraphics extends JPanel implements ActionListener, KeyListener
     public static double bX = 0, bVel = 1.3;
     String s = "assets/sprites/";
     int i = ThreadLocalRandom.current().nextInt(0, 3), j = 0;
+    boolean pause = false;
 
     ImageIcon[] backgrounds = 
     {
@@ -123,11 +124,14 @@ public class RunGraphics extends JPanel implements ActionListener, KeyListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        x += xVel;
-        y += yVel;
-        yVel += grav;
-        yVel = sigmoid(yVel);
-        repaint();
+        if(!pause)
+        {
+            x += xVel;
+            y += yVel;
+            yVel += grav;
+            yVel = sigmoid(yVel);
+            repaint();
+        }
     }
 
     @Override
@@ -149,7 +153,11 @@ public class RunGraphics extends JPanel implements ActionListener, KeyListener
     @Override
     public void keyReleased(KeyEvent e)
     {
-
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_P)
+        {
+            pause = !pause;
+        }
     }
 }
 
